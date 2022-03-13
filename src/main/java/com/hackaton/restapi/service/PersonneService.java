@@ -12,6 +12,7 @@ import com.hackaton.restapi.entity.Centre;
 import com.hackaton.restapi.entity.Personne;
 import com.hackaton.restapi.entity.User;
 import com.hackaton.restapi.exception.ApiRequestException;
+import com.hackaton.restapi.repository.HistoriqueRepository;
 import com.hackaton.restapi.repository.PersonneRepository;
 import com.hackaton.restapi.util.Util;
 
@@ -26,12 +27,14 @@ import com.hackaton.restapi.query.SearchOperator;
 @Service
 public class PersonneService {
     private  PersonneRepository personneRepository;
+    private  HistoriqueRepository historiqueRepository;
     private  UserService userService;
 
     @Autowired
-    public PersonneService(PersonneRepository personneRepository, UserService userService) {
+    public PersonneService(PersonneRepository personneRepository, UserService userService, HistoriqueRepository historiqueRepository) {
         this.personneRepository = personneRepository;
         this.userService = userService;
+        this.historiqueRepository = historiqueRepository;
     }
 
     public Personne addNewPersonne(Personne personne) {
@@ -203,6 +206,9 @@ public class PersonneService {
         return specificationMere.and(specificationAAjouter);
     }
 
+    public Integer getDose(Long id) {
+        return historiqueRepository.getDose(id);
+    }
 }
 
 
