@@ -1,8 +1,11 @@
 package com.hackaton.restapi.service;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
+import javax.persistence.criteria.Predicate;
 import javax.transaction.Transactional;
 
 import com.hackaton.restapi.entity.Role;
@@ -17,6 +20,7 @@ import com.hackaton.restapi.util.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -118,5 +122,20 @@ public class UserService {
             }
         }
         return false;
+    }
+
+    public static Specification<User> equalsIdMultiple(String listeId, String intitule) {
+        if (listeId == null || listeId.length() == 0)
+            return null;
+        return (root, query, criteriaBuilder) -> {
+            List<Predicate> conditionsDansOr = new ArrayList<Predicate>();
+            for (String idVaccin : listeId.split(",")) {
+                if (idVaccin.compareTo("") != 0) {
+                    Predicate equalsIdVaccin = criteriaBuilder.equal(root.get(intitule), idVaccin);
+                    conditionsDansOr.add(equalsIdVaccin);
+                }
+            }
+            return criteriaBuilder.or(conditionsDansOr.toArray(new Predicate[conditionsDansOr.size()]));
+        };
     }
 }

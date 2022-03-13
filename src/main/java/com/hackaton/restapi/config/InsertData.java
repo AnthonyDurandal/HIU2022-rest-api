@@ -13,6 +13,7 @@ import com.hackaton.restapi.repository.CentreRepository;
 import com.hackaton.restapi.repository.MaladieRepository;
 import com.hackaton.restapi.repository.PersonneRepository;
 import com.hackaton.restapi.repository.RoleRepository;
+import com.hackaton.restapi.repository.StockRepository;
 import com.hackaton.restapi.repository.UserRepository;
 import com.hackaton.restapi.repository.VaccinRepository;
 
