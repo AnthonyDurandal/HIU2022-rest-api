@@ -30,8 +30,6 @@ public class InsertData {
                 roleRepository.save(role2);
 
                 User user1 = new User(
-                    "admin", 
-                    "admin", 
                     "admin1@test.com", 
                     passwordEncoder.encode("123456789"), 
                     new Timestamp(System.currentTimeMillis()), 
@@ -39,8 +37,6 @@ public class InsertData {
                 );
                 
                 User user2 = new User(
-                    "user", 
-                    "simple", 
                     "usersimple@test.com", 
                     passwordEncoder.encode("123456789"), 
                     new Timestamp(System.currentTimeMillis()), 

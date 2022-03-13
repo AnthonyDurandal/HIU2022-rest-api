@@ -41,9 +41,7 @@ public class UserService {
     public User addNewUser(User user, String role) {
         if (user == null)
             throw new ApiRequestException("Aucune données à ajouter");
-        if (user.getNom() == null ||
-                user.getPrenom() == null ||
-                user.getUsername() == null ||
+        if (user.getUsername() == null ||
                 user.getPassword() == null) {
             throw new ApiRequestException("Vous devez completer tous les champs obligatoires");
         }

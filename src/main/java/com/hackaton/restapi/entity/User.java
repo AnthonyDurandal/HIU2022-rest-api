@@ -25,8 +25,6 @@ public class User {
     @SequenceGenerator(name = "user_sequence", sequenceName = "user_sequence", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_sequence")
     Long id;
-    String nom;
-    String prenom;
     String username;
     String password;
     Timestamp dateCreation;
@@ -41,30 +39,22 @@ public class User {
 
     }
 
-    public User(String nom, 
-            String prenom, 
-            String username, 
+    public User(String username, 
             String password, 
             Timestamp dateCreation, 
             Role role) {
-        this.nom = nom;
-        this.prenom = prenom;
         this.username = username;
         this.password = password;
         this.dateCreation = dateCreation;
         this.role = role;
     }
 
-    public User(Long id, 
-            String nom, 
-            String prenom, 
+    public User(Long id,
             String username,
             String password, 
             Timestamp dateCreation, 
             Role role) {
         this.id = id;
-        this.nom = nom;
-        this.prenom = prenom;
         this.username = username;
         this.password = password;
         this.dateCreation = dateCreation;
@@ -77,22 +67,6 @@ public class User {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getNom() {
-        return this.nom;
-    }
-
-    public void setNom(String nom) {
-        this.nom = nom;
-    }
-
-    public String getPrenom() {
-        return this.prenom;
-    }
-
-    public void setPrenom(String prenom) {
-        this.prenom = prenom;
     }
 
     public String getUsername() {
@@ -131,8 +105,6 @@ public class User {
     public String toString() {
         return "{" +
             " id='" + getId() + "'" +
-            ", nom='" + getNom() + "'" +
-            ", prenom='" + getPrenom() + "'" +
             ", username='" + getUsername() + "'" +
             ", password='" + getPassword() + "'" +
             ", dateCreation='" + getDateCreation() + "'" +

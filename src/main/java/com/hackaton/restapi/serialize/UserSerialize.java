@@ -15,10 +15,6 @@ public class UserSerialize extends JsonSerializer<User> {
         gen.writeStartObject();
         gen.writeFieldName("id");
         gen.writeObject(user.getId());
-        gen.writeFieldName("nom");
-        gen.writeObject(user.getNom());
-        gen.writeFieldName("prenom");
-        gen.writeObject(user.getPrenom());
         gen.writeFieldName("username");
         gen.writeObject(user.getUsername());
         gen.writeFieldName("dateCreation");
