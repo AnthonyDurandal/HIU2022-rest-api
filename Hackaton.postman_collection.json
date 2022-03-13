@@ -1,0 +1,220 @@
+{
+	"info": {
+		"_postman_id": "b6436994-ddcb-4df4-aa1b-7711499ba5e4",
+		"name": "Hackaton",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Test aptitude",
+			"item": [
+				{
+					"name": "Ajout Test Aptitude",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"testPositif\": false,\r\n    \"vaccin\": false,\r\n    \"remarqueVaccin\": null,\r\n    \"enceinte\": false,\r\n    \"allaite\": false,\r\n    \"personne\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/TestAptitudes",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"TestAptitudes"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Login",
+			"item": [
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var data = JSON.parse(responseBody)\r",
+									"pm.collectionVariables.set('token', data.token)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"personne@test.com\",\r\n    \"password\": \"123456789\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/Login",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"Login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Detail test aptitude",
+			"item": [
+				{
+					"name": "Ajout detail test aptitude",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"testAptitude\": 1,\r\n    \"maladie\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/DetailTestAptitudes",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"DetailTestAptitudes"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Demande vaccin",
+			"item": [
+				{
+					"name": "Ajout demande vaccin",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"dateDemande\": \"2022-13-03\",\r\n    \"personne\": 1,\r\n    \"centre\": 1,\r\n    \"vaccin\": 1,\r\n    \"estAnnule\": false,\r\n    \"remarque\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/DemandeVaccins",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"DemandeVaccins"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Personne",
+			"item": [
+				{
+					"name": "Nombre de dose prise",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/Personnes/:id/dose",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"Personnes",
+								":id",
+								"dose"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "token",
+			"value": "",
+			"type": "default"
+		},
+		{
+			"key": "host",
+			"value": "http://localhost:8082/api/v1/",
+			"type": "default"
+		}
+	]
+}

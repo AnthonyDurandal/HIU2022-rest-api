@@ -1,6 +1,7 @@
 package com.hackaton.restapi.service;
 
 import java.sql.Timestamp;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +22,8 @@ import org.springframework.stereotype.Service;
 
 import com.hackaton.restapi.query.SearchCriteria;
 import com.hackaton.restapi.query.SearchOperator;
+
+import java.time.format.DateTimeFormatter;
 
 @Service
 public class CentreService {
@@ -71,6 +74,7 @@ public class CentreService {
 
      public Page<Centre> getCentre(String sort, Integer page, Integer size,
             String id, String nom,String expressionLongitude, String expressionLatitude, String expressionOuverture, String expressionFermeture,String nombrePersonnel,String idUser) {
+                
         Specification<Centre> specification = getAllSpecifications( id,  nom, expressionLongitude,  expressionLatitude, expressionOuverture, expressionFermeture, nombrePersonnel, idUser);
         specification = (specification != null) ? Specification.where(specification) : null;
         if (page == null)
@@ -88,7 +92,8 @@ public class CentreService {
             throw new ApiRequestException("Aucun élement trouvé");
         return res;
     }
-
+    // id, nom, expressionLongitude, expressionLatitude, expressionOuverture,
+    // expressionFermeture, nombrePersonnel, idUser
     public Specification<Centre> getAllSpecifications(String id, String nom, String expressionLongitude,
             String expressionLatitude, String expressionOuverture, String expressionFermeture, String nombrePersonnel, String idUser) {
         Specification<Centre> specification = ajouterSiNonNull(null, equalsIdMultiple(id, "id"));
@@ -109,30 +114,30 @@ public class CentreService {
         if (critere.getOperator() == SearchOperator.BETWEEN) {
             String[] values = (String[]) critere.getValue();
             return (root, query, criteriaBuilder) -> criteriaBuilder.between(root.get(critere.getKey())
-                    .as(Timestamp.class), Timestamp.valueOf(values[0]), Timestamp.valueOf(values[1]));
+                    .as(Double.class), Double.valueOf(values[0]), Double.valueOf(values[1]));
         }
-        Timestamp valueToTimestamp = Timestamp.valueOf((String) critere.getValue());
-        critere.setValue(valueToTimestamp);
+        Double valueToDouble = Double.valueOf((String) critere.getValue());
+        critere.setValue(valueToDouble);
         switch (critere.getOperator()) {
             case EQUALS:
                 return (root, query, criteriaBuilder) -> criteriaBuilder.equal(
-                        root.get(critere.getKey()).as(Timestamp.class),
-                        valueToTimestamp);
+                        root.get(critere.getKey()).as(Double.class),
+                        valueToDouble);
             case GT:
                 return (root, query, criteriaBuilder) -> criteriaBuilder.greaterThan(
-                        root.get(critere.getKey()).as(Timestamp.class),
-                        valueToTimestamp);
+                        root.get(critere.getKey()).as(Double.class),
+                        valueToDouble);
             case GTE:
                 return (root, query, criteriaBuilder) -> criteriaBuilder.greaterThanOrEqualTo(root.get(critere
                         .getKey())
-                        .as(Timestamp.class), valueToTimestamp);
+                        .as(Double.class), valueToDouble);
             case LT:
                 return (root, query, criteriaBuilder) -> criteriaBuilder.lessThan(
-                        root.get(critere.getKey()).as(Timestamp.class),
-                        (Timestamp) critere.getValue());
+                        root.get(critere.getKey()).as(Double.class),
+                        (Double) critere.getValue());
             case LTE:
                 return (root, query, criteriaBuilder) -> criteriaBuilder.lessThanOrEqualTo(root.get(critere.getKey())
-                        .as(Timestamp.class), valueToTimestamp);
+                        .as(Double.class), valueToDouble);
             default:
                 return null;
         }
@@ -141,33 +146,34 @@ public class CentreService {
     public static Specification<Centre> dateCreationSpecification(String expression, String intitule) {
         if (Util.isNullOrEmpty(expression))
             return null;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
         SearchCriteria critere = SearchCriteria.getSearchCriteria(intitule, expression);
         if (critere.getOperator() == SearchOperator.BETWEEN) {
             String[] values = (String[]) critere.getValue();
             return (root, query, criteriaBuilder) -> criteriaBuilder.between(root.get(critere.getKey())
-                    .as(Timestamp.class), Timestamp.valueOf(values[0]), Timestamp.valueOf(values[1]));
+                    .as(LocalTime.class), LocalTime.parse(values[0],formatter), LocalTime.parse(values[1],formatter));
         }
-        Timestamp valueToTimestamp = Timestamp.valueOf((String) critere.getValue());
-        critere.setValue(valueToTimestamp);
+        LocalTime valueToLocalTime = LocalTime.parse((String) critere.getValue(), formatter);
+        critere.setValue(valueToLocalTime);
         switch (critere.getOperator()) {
             case EQUALS:
                 return (root, query, criteriaBuilder) -> criteriaBuilder.equal(
-                        root.get(critere.getKey()).as(Timestamp.class),
-                        valueToTimestamp);
+                        root.get(critere.getKey()).as(LocalTime.class),
+                        valueToLocalTime);
             case GT:
                 return (root, query, criteriaBuilder) -> criteriaBuilder.greaterThan(
-                        root.get(critere.getKey()).as(Timestamp.class),
-                        valueToTimestamp);
+                        root.get(critere.getKey()).as(LocalTime.class),
+                        valueToLocalTime);
             case GTE:
                 return (root, query, criteriaBuilder) -> criteriaBuilder.greaterThanOrEqualTo(root.get("dateCreation")
-                        .as(Timestamp.class), valueToTimestamp);
+                        .as(LocalTime.class), valueToLocalTime);
             case LT:
                 return (root, query, criteriaBuilder) -> criteriaBuilder.lessThan(
-                        root.get(critere.getKey()).as(Timestamp.class),
-                        (Timestamp) critere.getValue());
+                        root.get(critere.getKey()).as(LocalTime.class),
+                        (LocalTime) critere.getValue());
             case LTE:
                 return (root, query, criteriaBuilder) -> criteriaBuilder.lessThanOrEqualTo(root.get(critere.getKey())
-                        .as(Timestamp.class), valueToTimestamp);
+                        .as(LocalTime.class), valueToLocalTime);
             default:
                 return null;
         }
@@ -192,7 +198,7 @@ public class CentreService {
         if (Util.isNullOrEmpty(idUser))
             return null;
         return (root, query, criteriaBuilder) -> {
-            Join<Centre, User> jointure = root.join("User");
+            Join<Centre, User> jointure = root.join("user");
             return criteriaBuilder.equal(jointure.get("id"), idUser);
         };
     }

@@ -18,7 +18,7 @@ class RestapiApplicationTests {
 	void contextLoads() {
 		// getCentre(String sort, Integer page, Integer size,
         //     String id, String nom,String expressionLongitude, String expressionLatitude,expressionOuverture, String expressionFermeture,String nombrePersonnel,String idUser)
-		userService.getCentre( null,  null,  null, "1",  "monNom", "lt:18.8888",  "gt:-26.2346786",  "lt:2022-02-02 00:00:00","gt:2022-12-02 00:00:00", "12", "1");
+		userService.getCentre( null,  null,  null, "1",  "monNom", "lt:18.8888",  "gt:-26.2346786",  "08:00","12:00", "12", "1");
 	}
 
 }
