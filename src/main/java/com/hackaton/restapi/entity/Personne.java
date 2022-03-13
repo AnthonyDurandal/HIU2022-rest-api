@@ -35,6 +35,19 @@ public class Personne {
     public Personne() {
     }
 
+    public Personne(Long id) {
+        this.id = id;
+    }
+
+    public Personne(String nom, String prenom, Timestamp dateDeNaissance, String cin, String mail, User user) {
+        this.nom = nom;
+        this.prenom = prenom;
+        this.dateDeNaissance = dateDeNaissance;
+        this.cin = cin;
+        this.mail = mail;
+        this.user = user;
+    }
+
     public Personne(Long id, String nom, String prenom, Timestamp dateDeNaissance, String cin, String mail, User user) {
         this.id = id;
         this.nom = nom;

@@ -26,6 +26,14 @@ public class Maladie {
     public Maladie() {
     }
 
+    public Maladie(String nom) {
+        this.nom = nom;
+    }
+
+    public Maladie(Long id) {
+        this.id = id;
+    }
+
     public Maladie(Long id, String nom) {
         this.id = id;
         this.nom = nom;

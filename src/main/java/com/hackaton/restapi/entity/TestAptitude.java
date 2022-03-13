@@ -35,6 +35,10 @@ public class TestAptitude {
     public TestAptitude() {
     }
 
+    public TestAptitude(Long id) {
+        this.id = id;
+    }
+
     public TestAptitude(Long id, Boolean testPositif, Boolean vaccin, String remarqueVaccin, Boolean enceinte, Boolean allaite, Personne personne) {
         this.id = id;
         this.testPositif = testPositif;

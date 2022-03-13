@@ -53,14 +53,25 @@ public class WelcomeController {
                             authorities));
             token = jwtUtil.generateToken(authRequest.getUsername());
         } catch (BadCredentialsException e) {
-            List<SimpleGrantedAuthority> authorities = new ArrayList<>();
-            authorities.add(new SimpleGrantedAuthority("user"));
-            authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(
-                            authRequest.getUsername(),
-                            authRequest.getPassword(),
-                            authorities));
-            token = jwtUtil.generateToken(authRequest.getUsername());
+            try {
+                List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+                authorities.add(new SimpleGrantedAuthority("personne"));
+                authenticationManager.authenticate(
+                        new UsernamePasswordAuthenticationToken(
+                                authRequest.getUsername(),
+                                authRequest.getPassword(),
+                                authorities));
+                token = jwtUtil.generateToken(authRequest.getUsername());
+            } catch(BadCredentialsException ex) {
+                List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+                authorities.add(new SimpleGrantedAuthority("centreVaccination"));
+                authenticationManager.authenticate(
+                        new UsernamePasswordAuthenticationToken(
+                                authRequest.getUsername(),
+                                authRequest.getPassword(),
+                                authorities));
+                token = jwtUtil.generateToken(authRequest.getUsername());
+            }
         }
         jwtUtil.enregistrerToken(token);
         return new AuthResponse(user.getUserByUsername(authRequest.getUsername()).get(), token);

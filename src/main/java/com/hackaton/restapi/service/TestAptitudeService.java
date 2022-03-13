@@ -21,8 +21,10 @@ public class TestAptitudeService {
         if(testAptitude == null)
             throw new ApiRequestException("Aucune données à ajouter");
         if(testAptitude.getAllaite() == null || testAptitude.getEnceinte() == null || testAptitude.getTestPositif() == null || 
-        testAptitude.getVaccin() == null || testAptitude.getPersonne() == null || testAptitude.getRemarqueVaccin() == null)
+        testAptitude.getVaccin() == null || testAptitude.getPersonne() == null)
             throw new ApiRequestException("Vous devez completer tous les champs obligatoires");
+        if(testAptitude.getAllaite() || testAptitude.getEnceinte() || testAptitude.getTestPositif() || testAptitude.getVaccin())
+            throw new ApiRequestException("Vous ne pouvez pas faire le vaccin.");
         return testAptitudeRepository.save(testAptitude);
     }
 

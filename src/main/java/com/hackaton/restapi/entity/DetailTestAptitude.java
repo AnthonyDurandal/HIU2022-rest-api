@@ -27,6 +27,10 @@ public class DetailTestAptitude {
     public DetailTestAptitude() {
     }
 
+    public DetailTestAptitude(Long id) {
+        this.id = id;
+    }
+
     public DetailTestAptitude(Long id, TestAptitude testAptitude, Maladie maladie) {
         this.id = id;
         this.testAptitude = testAptitude;
