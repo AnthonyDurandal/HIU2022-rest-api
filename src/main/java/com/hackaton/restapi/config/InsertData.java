@@ -2,10 +2,14 @@ package com.hackaton.restapi.config;
 
 import java.sql.Timestamp;
 
+import com.hackaton.restapi.entity.Centre;
 import com.hackaton.restapi.entity.Role;
 import com.hackaton.restapi.entity.User;
+import com.hackaton.restapi.repository.CentreRepository;
 import com.hackaton.restapi.repository.RoleRepository;
+import com.hackaton.restapi.repository.StockRepository;
 import com.hackaton.restapi.repository.UserRepository;
+import com.hackaton.restapi.repository.VaccinRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -21,7 +25,8 @@ public class InsertData {
 
 
     @Bean
-    CommandLineRunner commandLineRunner(UserRepository userRepository, RoleRepository roleRepository) {
+    CommandLineRunner commandLineRunner(UserRepository userRepository, RoleRepository roleRepository
+    ) {
         return args -> {
             if (userRepository.count() == 0) {
                 Role role1 = new Role("admin");
