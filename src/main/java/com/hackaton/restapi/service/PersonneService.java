@@ -202,7 +202,6 @@ public class PersonneService {
             return specificationAAjouter;
         return specificationMere.and(specificationAAjouter);
     }
-
 }
 
 
