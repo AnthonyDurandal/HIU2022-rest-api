@@ -5,6 +5,7 @@ import java.sql.Timestamp;
 import com.hackaton.restapi.entity.Personne;
 import com.hackaton.restapi.entity.User;
 import com.hackaton.restapi.exception.ApiRequestException;
+import com.hackaton.restapi.repository.HistoriqueRepository;
 import com.hackaton.restapi.repository.PersonneRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,12 +14,14 @@ import org.springframework.stereotype.Service;
 @Service
 public class PersonneService {
     private  PersonneRepository personneRepository;
+    private  HistoriqueRepository historiqueRepository;
     private  UserService userService;
 
     @Autowired
-    public PersonneService(PersonneRepository personneRepository, UserService userService) {
+    public PersonneService(PersonneRepository personneRepository, UserService userService, HistoriqueRepository historiqueRepository) {
         this.personneRepository = personneRepository;
         this.userService = userService;
+        this.historiqueRepository = historiqueRepository;
     }
 
     public Personne addNewPersonne(Personne personne) {
@@ -49,5 +52,9 @@ public class PersonneService {
         User user = userService.addNewUser(personne.getUser(), "personne");
         personne.setUser(user);
         return personneRepository.save(personne);
+    }
+
+    public Integer getDose(Long id) {
+        return historiqueRepository.getDose(id);
     }
 }
