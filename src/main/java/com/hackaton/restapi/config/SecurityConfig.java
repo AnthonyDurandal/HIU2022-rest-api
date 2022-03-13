@@ -10,6 +10,7 @@ import com.hackaton.restapi.util.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.BeanIds;
@@ -52,10 +53,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/").permitAll()
-                .antMatchers("/api/v1/Login").permitAll()
-                .antMatchers("/api/v1/Logout").permitAll()
-                .antMatchers("/api/v1/CheckToken").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/v1/Centres").hasAnyAuthority("admin")
+                .antMatchers(HttpMethod.POST, "/api/v1/Personnes").permitAll()
+                .antMatchers(HttpMethod.GET,"/").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/v1/Login").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/v1/Logout").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/v1/CheckToken").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .exceptionHandling()

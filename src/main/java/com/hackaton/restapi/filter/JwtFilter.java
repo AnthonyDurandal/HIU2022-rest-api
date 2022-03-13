@@ -34,16 +34,22 @@ public class JwtFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
+        
+        String[] url = {
+            "/",
+            "/api/v1/Login",
+            "/api/v1/Logout",
+            "/api/v1/CheckToken",
+            "/api/v1/Personnes",
+        };
 
-        if (request.getServletPath().compareTo("/") == 0) {
+        boolean verifUrl = true;
+        for(int i=0;i<url.length;i++){
+            if (request.getServletPath().compareTo(url[i]) == 0) 
+                verifUrl = false;
+        }
 
-        } else if (request.getServletPath().compareTo("/api/v1/Login") == 0) {
-
-        } else if (request.getServletPath().compareTo("/api/v1/Logout") == 0) {
-
-        } else if (request.getServletPath().compareTo("/api/v1/CheckToken") == 0) {
-
-        } else {
+        if(verifUrl) {
             String token = request.getHeader("Authorization");
             if (token != null) {
                 try {

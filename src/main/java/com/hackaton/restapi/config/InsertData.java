@@ -25,9 +25,11 @@ public class InsertData {
         return args -> {
             if (userRepository.count() == 0) {
                 Role role1 = new Role("admin");
-                Role role2 = new Role("user");
+                Role role2 = new Role("centreVaccination");
+                Role role3 = new Role("personne");
                 roleRepository.save(role1);
                 roleRepository.save(role2);
+                roleRepository.save(role3);
 
                 User user1 = new User(
                     "admin1@test.com", 

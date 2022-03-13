@@ -21,7 +21,7 @@ public class Personne {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "personne_sequence")
     private Long id;
     private String nom;
-    private String prennom;
+    private String prenom;
     private Timestamp dateDeNaissance;
     private String cin;
     private String mail;
@@ -35,10 +35,10 @@ public class Personne {
     public Personne() {
     }
 
-    public Personne(Long id, String nom, String prennom, Timestamp dateDeNaissance, String cin, String mail, User user) {
+    public Personne(Long id, String nom, String prenom, Timestamp dateDeNaissance, String cin, String mail, User user) {
         this.id = id;
         this.nom = nom;
-        this.prennom = prennom;
+        this.prenom = prenom;
         this.dateDeNaissance = dateDeNaissance;
         this.cin = cin;
         this.mail = mail;
@@ -61,12 +61,12 @@ public class Personne {
         this.nom = nom;
     }
 
-    public String getPrennom() {
-        return this.prennom;
+    public String getPrenom() {
+        return this.prenom;
     }
 
     public void setPrennom(String prennom) {
-        this.prennom = prennom;
+        this.prenom = prennom;
     }
 
     public Timestamp getDateDeNaissance() {
@@ -106,7 +106,7 @@ public class Personne {
         return "{" +
             " id='" + getId() + "'" +
             ", nom='" + getNom() + "'" +
-            ", prennom='" + getPrennom() + "'" +
+            ", prennom='" + getPrenom() + "'" +
             ", dateDeNaissance='" + getDateDeNaissance() + "'" +
             ", cin='" + getCin() + "'" +
             ", mail='" + getMail() + "'" +
