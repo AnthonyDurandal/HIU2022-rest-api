@@ -17,6 +17,8 @@ import com.hackaton.restapi.repository.UserRepository;
 import com.hackaton.restapi.repository.UserTokenRepository;
 import com.hackaton.restapi.util.Util;
 
+import com.hackaton.restapi.query.SearchCriteria;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -124,18 +126,73 @@ public class UserService {
         return false;
     }
 
-    public static Specification<User> equalsIdMultiple(String listeId, String intitule) {
-        if (listeId == null || listeId.length() == 0)
+    public Page<User> getUser(String sort, Integer page, Integer size,
+            String id, String idRole) {
+        Specification<User> specification = getAllSpecifications(id, idRole);
+        specification = (specification != null) ? Specification.where(specification) : null;
+        if (page == null)
+            page = 1;
+        if (size == null || size == 0)
+            size = userRepository.findAll().size();
+        if (page < 1)
+            throw new ApiRequestException("L'index de la page ne doit pas être inférieur à un : page = " + page);
+        if (size < 0)
+            throw new ApiRequestException(
+                    "La taille de la page ne doit pas être inférieure à un : size = " + size + "    " + (size == 0));
+        Pageable pageable = Util.pageable(sort, page - 1, size);
+        Page<User> res = userRepository.findAll(specification, pageable);
+        if (res.getSize() == 0)
+            throw new ApiRequestException("Aucun élement trouvé");
+        return res;
+    }
+
+    public Specification<User> getAllSpecifications(String id, String idRole) {
+        Specification<User> specification = ajouterSiNonNull(null, equalsId(id));
+        specification = ajouterSiNonNull(specification, equalsIdRole(idRole));
+        return specification;
+    }
+
+    public static Specification<User> equalsId(String id) {
+        if (Util.isNullOrEmpty(id))
             return null;
-        return (root, query, criteriaBuilder) -> {
-            List<Predicate> conditionsDansOr = new ArrayList<Predicate>();
-            for (String idVaccin : listeId.split(",")) {
-                if (idVaccin.compareTo("") != 0) {
-                    Predicate equalsIdVaccin = criteriaBuilder.equal(root.get(intitule), idVaccin);
-                    conditionsDansOr.add(equalsIdVaccin);
-                }
-            }
-            return criteriaBuilder.or(conditionsDansOr.toArray(new Predicate[conditionsDansOr.size()]));
-        };
+        SearchCriteria critere = SearchCriteria.getSearchCriteria("id", id);
+        switch (critere.getOperator()) {
+            case EQUALS:
+                return (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get(critere.getKey()),
+                        critere.getValue());
+            default:
+                return null;
+            // throw new Exception("TypeSignalementService.equalsId() n'accepte que le
+            // critère '='
+            // ");
+        }
+    }
+
+    public static Specification<User> equalsIdRole(String id) {
+        if (Util.isNullOrEmpty(id))
+            return null;
+        SearchCriteria critere = SearchCriteria.getSearchCriteria("id", id);
+        switch (critere.getOperator()) {
+            case EQUALS:
+                return (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get(critere.getKey()),
+                        critere.getValue());
+            default:
+                return null;
+            // throw new Exception("TypeSignalementService.equalsId() n'accepte que le
+            // critère '='
+            // ");
+        }
+    }
+
+    public Specification<User> ajouterSiNonNull(Specification<User> specificationMere,
+            Specification<User> specificationAAjouter) {
+        if (specificationAAjouter == null)
+            return specificationMere;
+        // choix 1: ajout de where :if(specificationMere == null)return
+        // Specification.where(specificationAAjouter);
+        /* choix 2: on ajoute pas directement where */
+        if (specificationMere == null)
+            return specificationAAjouter;
+        return specificationMere.and(specificationAAjouter);
     }
 }
