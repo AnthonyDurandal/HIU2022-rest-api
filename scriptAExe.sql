@@ -1,3 +1,21 @@
+/* Etat vaccin non utilisé*/
+Create view etat_vaccin_disponible as
+select
+    count(id) as quantite,
+    centre_id,
+    vaccin_id
+from
+    stock
+where
+    est_utilise is false
+group by
+    vaccin_id,
+    centre_id;
+
+
+
+
+/*Fin etat vaccin non utilise*/
 /*Etat vaccin par date peremption*/
 Create view etat_vaccin_par_peremption as
 select
@@ -16,7 +34,7 @@ group by
 
 
 
-/**/
+/*Fin etat vaccin par date peremption*/
 /*Stat moyenne par jour*/
 Create view demande_traite_par_jour as
 Select
