@@ -1,15 +1,20 @@
 package com.hackaton.restapi.config;
 
 import java.sql.Timestamp;
+import java.time.LocalTime;
 
+import com.hackaton.restapi.entity.Centre;
 import com.hackaton.restapi.entity.Maladie;
 import com.hackaton.restapi.entity.Personne;
 import com.hackaton.restapi.entity.Role;
 import com.hackaton.restapi.entity.User;
+import com.hackaton.restapi.entity.Vaccin;
+import com.hackaton.restapi.repository.CentreRepository;
 import com.hackaton.restapi.repository.MaladieRepository;
 import com.hackaton.restapi.repository.PersonneRepository;
 import com.hackaton.restapi.repository.RoleRepository;
 import com.hackaton.restapi.repository.UserRepository;
+import com.hackaton.restapi.repository.VaccinRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -25,9 +30,11 @@ public class InsertData {
 
 
     @Bean
-    CommandLineRunner commandLineRunner(UserRepository userRepository, RoleRepository roleRepository, MaladieRepository maladieRepository, PersonneRepository personneRepository) {
+    CommandLineRunner commandLineRunner(UserRepository userRepository, RoleRepository roleRepository, MaladieRepository maladieRepository, 
+    PersonneRepository personneRepository, VaccinRepository vaccinRepository, CentreRepository centreRepository) {
         return args -> {
             User tmp = null;
+            User tmp1 = null;
             if (userRepository.count() == 0) {
                 Role role1 = new Role("admin");
                 Role role2 = new Role("centreVaccination");
@@ -57,7 +64,7 @@ public class InsertData {
                     role3
                 );
                 userRepository.save(user1);
-                userRepository.save(user2);
+                tmp1 = userRepository.save(user2);
                 tmp = userRepository.save(user3);
             }
 
@@ -74,6 +81,18 @@ public class InsertData {
             if(personneRepository.count() == 0) {
                 Personne personne = new Personne("Personne", "Test", new Timestamp(System.currentTimeMillis()), "101231174281", "personne@test.com", tmp);
                 personneRepository.save(personne);
+            }
+
+            if(vaccinRepository.count() == 0) {
+                Vaccin vaccin1 = new Vaccin("Pfizer", 3, 3);
+                Vaccin vaccin2 = new Vaccin("Astrazeneca", 3, 5);
+                vaccinRepository.save(vaccin1);
+                vaccinRepository.save(vaccin2);
+            }
+
+            if(centreRepository.count() == 0) {
+                Centre centre1 = new Centre("CCO Ivato", 18.434, -25.34, true, LocalTime.of(7, 30), LocalTime.of(18, 30), 5, tmp1);
+                centreRepository.save(centre1);
             }
         };
     }

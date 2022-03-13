@@ -38,4 +38,9 @@ public class CentreService {
         centre.setUser(user);
         return centreRepository.save(centre);
     }
+
+    public Centre findById(Long id) {
+        return centreRepository.findById(id)
+        .orElseThrow(() -> new ApiRequestException("Aucun centre n'a cet id"));
+    }
 }

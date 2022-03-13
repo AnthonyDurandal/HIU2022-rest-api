@@ -42,6 +42,10 @@ public class Centre {
         this.user = user;
     }
 
+    public Centre(Long id) {
+        this.id = id;
+    }
+
     public Centre(Long id, String nom, Double longitude, Double latitude, Boolean estOuvert, LocalTime ouverture,
             LocalTime fermeture, Integer nombrePersonnel, User user) {
         this.id = id;

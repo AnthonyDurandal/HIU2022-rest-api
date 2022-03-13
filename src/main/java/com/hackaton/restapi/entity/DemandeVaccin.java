@@ -19,32 +19,32 @@ public class DemandeVaccin {
     private Long id;
     private Timestamp dateDemande;
     @ManyToOne
-    private User user;
+    private Personne personne;
     @ManyToOne
     private Centre centre;
     @ManyToOne
     private Vaccin vaccin;
-    private boolean estAnnule;
+    private Boolean estAnnule;
     private String remarque;
     
     public DemandeVaccin() {
     }
 
-    public DemandeVaccin(Timestamp dateDemande, User user, Centre centre, Vaccin vaccin, boolean estAnnule,
+    public DemandeVaccin(Timestamp dateDemande, Personne personne, Centre centre, Vaccin vaccin, Boolean estAnnule,
             String remarque) {
         this.dateDemande = dateDemande;
-        this.user = user;
+        this.personne = personne;
         this.centre = centre;
         this.vaccin = vaccin;
         this.estAnnule = estAnnule;
         this.remarque = remarque;
     }
 
-    public DemandeVaccin(Long id, Timestamp dateDemande, User user, Centre centre, Vaccin vaccin, boolean estAnnule,
+    public DemandeVaccin(Long id, Timestamp dateDemande, Personne personne, Centre centre, Vaccin vaccin, Boolean estAnnule,
             String remarque) {
         this.id = id;
         this.dateDemande = dateDemande;
-        this.user = user;
+        this.personne = personne;
         this.centre = centre;
         this.vaccin = vaccin;
         this.estAnnule = estAnnule;
@@ -67,12 +67,12 @@ public class DemandeVaccin {
         this.dateDemande = dateDemande;
     }
 
-    public User getUser() {
-        return this.user;
+    public Personne getPersonne() {
+        return personne;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setPersonne(Personne personne) {
+        this.personne = personne;
     }
 
     public Centre getCentre() {
@@ -91,11 +91,11 @@ public class DemandeVaccin {
         this.vaccin = vaccin;
     }
 
-    public boolean isEstAnnule() {
+    public Boolean isEstAnnule() {
         return this.estAnnule;
     }
 
-    public void setEstAnnule(boolean estAnnule) {
+    public void setEstAnnule(Boolean estAnnule) {
         this.estAnnule = estAnnule;
     }
 

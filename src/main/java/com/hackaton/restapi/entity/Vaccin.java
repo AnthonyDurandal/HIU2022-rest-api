@@ -26,6 +26,10 @@ public class Vaccin {
         this.ecartDose = ecartDose;
     }
 
+    public Vaccin(Long id){
+        this.id = id;
+    }
+
     public Vaccin(Long id, String nom, int nombreDose, int ecartDose){
         this.id = id;
         this.nom = nom;
