@@ -28,6 +28,7 @@ from
 where
     est_utilise is true
 group by
+    centre_id,
     vaccin_id,
     date_peremption;
 
@@ -75,8 +76,9 @@ group by
 
 
 
+Create view demande_moyenne_par_jour as
 select
-    total / abs(min_date, max_date) as moyenne,
+    sum(total / abs(min_date :: date - max_date :: date)) as moyenne,
     vaccin_id,
     centre_id
 from
