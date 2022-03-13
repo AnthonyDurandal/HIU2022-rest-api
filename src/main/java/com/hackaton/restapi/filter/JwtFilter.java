@@ -40,7 +40,7 @@ public class JwtFilter extends OncePerRequestFilter {
             "/api/v1/Login",
             "/api/v1/Logout",
             "/api/v1/CheckToken",
-            "/api/v1/Personnes",
+            "/api/v1/Personnes"
         };
 
         boolean verifUrl = true;
