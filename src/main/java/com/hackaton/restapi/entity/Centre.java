@@ -18,20 +18,20 @@ public class Centre {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "centre_sequence")
     private Long id;
     private String nom;
-    private double longitude;
-    private double latitude;
-    private boolean estOuvert;
+    private Double longitude;
+    private Double latitude;
+    private Boolean estOuvert;
     private LocalTime ouverture;
     private LocalTime fermeture;
-    private int nombrePersonnel;
+    private Integer nombrePersonnel;
     @OneToOne
     private User user;
 
     public Centre() {
     }
 
-    public Centre(String nom, double longitude, double latitude, boolean estOuvert, LocalTime ouverture,
-            LocalTime fermeture, int nombrePersonnel, User user) {
+    public Centre(String nom, Double longitude, Double latitude, Boolean estOuvert, LocalTime ouverture,
+            LocalTime fermeture, Integer nombrePersonnel, User user) {
         this.nom = nom;
         this.longitude = longitude;
         this.latitude = latitude;
@@ -42,8 +42,8 @@ public class Centre {
         this.user = user;
     }
 
-    public Centre(Long id, String nom, double longitude, double latitude, boolean estOuvert, LocalTime ouverture,
-            LocalTime fermeture, int nombrePersonnel, User user) {
+    public Centre(Long id, String nom, Double longitude, Double latitude, Boolean estOuvert, LocalTime ouverture,
+            LocalTime fermeture, Integer nombrePersonnel, User user) {
         this.id = id;
         this.nom = nom;
         this.longitude = longitude;
@@ -71,27 +71,27 @@ public class Centre {
         this.nom = nom;
     }
 
-    public double getLongitude() {
+    public Double getLongitude() {
         return this.longitude;
     }
 
-    public void setLongitude(double longitude) {
+    public void setLongitude(Double longitude) {
         this.longitude = longitude;
     }
 
-    public double getLatitude() {
+    public Double getLatitude() {
         return this.latitude;
     }
 
-    public void setLatitude(double latitude) {
+    public void setLatitude(Double latitude) {
         this.latitude = latitude;
     }
 
-    public boolean isEstOuvert() {
+    public Boolean getEstOuvert() {
         return this.estOuvert;
     }
 
-    public void setEstOuvert(boolean estOuvert) {
+    public void setEstOuvert(Boolean estOuvert) {
         this.estOuvert = estOuvert;
     }
 
@@ -111,11 +111,11 @@ public class Centre {
         this.fermeture = fermeture;
     }
 
-    public int getNombrePersonnel() {
+    public Integer getNombrePersonnel() {
         return this.nombrePersonnel;
     }
 
-    public void setNombrePersonnel(int nombrePersonnel) {
+    public void setNombrePersonnel(Integer nombrePersonnel) {
         this.nombrePersonnel = nombrePersonnel;
     }
 
