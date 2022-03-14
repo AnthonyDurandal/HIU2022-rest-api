@@ -82,7 +82,7 @@ select
     vaccin_id,
     centre_id
 from
-    demande_date_max_min
+    demande_date_max_min    
 group by
     vaccin_id,
     centre_id;
