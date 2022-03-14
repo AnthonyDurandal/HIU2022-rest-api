@@ -53,10 +53,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers(HttpMethod.GET, "/api/v1/Personnes").hasAnyAuthority("personne")
-                .antMatchers(HttpMethod.POST, "/api/v1/TestAptitudes").hasAnyAuthority("personne")
-                .antMatchers(HttpMethod.POST, "/api/v1/Centres").hasAnyAuthority("admin")
-                .antMatchers(HttpMethod.POST, "/api/v1/Personnes").permitAll()
+            // centre
+            .antMatchers(HttpMethod.GET,  "/api/v1/Centres").permitAll()
+            .antMatchers(HttpMethod.POST,  "/api/v1/Centres").permitAll()
+            // demande
+            .antMatchers(HttpMethod.POST,  "api/v1/DemandeVaccins").permitAll()
+            // detailTestAptitude
+            .antMatchers(HttpMethod.POST,  "api/v1/DetailTestAptitudes").permitAll()
+            // personne
+            .antMatchers(HttpMethod.GET,  "api/v1//Personnes").permitAll()
+            .antMatchers(HttpMethod.POST,  "api/v1//Personnes/{id}/dose").permitAll()
+            // stock
+            .antMatchers(HttpMethod.GET,  "api/v1/Stock").permitAll()
+        // testAptitude
+                .antMatchers(HttpMethod.POST, "/api/v1/TestAptitudes").permitAll()
                 .antMatchers(HttpMethod.GET,"/").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/v1/Login").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/v1/Logout").permitAll()

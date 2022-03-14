@@ -38,7 +38,7 @@ public class PersonneController {
                 null);
     }
 
-    @GetMapping("Personnes/{id}/dose")
+    @GetMapping("/Personnes/{id}/dose")
     public HashMap<String, Integer> dose(@PathVariable Long id) {
         HashMap<String, Integer> result = new HashMap<>();
         result.put("dose", personneService.getDose(id));
